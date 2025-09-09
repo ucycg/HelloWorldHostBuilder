@@ -1,9 +1,10 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace HostBuilderPlayground;
 
-public class App : IHostedService
+public class App : BackgroundService
 {
     private readonly IMessageWriter _messageWriter;
     private readonly IHostApplicationLifetime _appLifetime;
@@ -12,33 +13,17 @@ public class App : IHostedService
         _messageWriter = messageWriter;
         _appLifetime = appLifetime;
     }
-        public Task StartAsync(CancellationToken cancellationToken)
+    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        _appLifetime.ApplicationStarted.Register(() =>
-        {
-            Task.Run(() =>
-            {
-                try
-                {
-                    Console.WriteLine("Starting App ...");
-                    Run();
-                }
-                finally
-                {
-                    _appLifetime.StopApplication();
-                }
-            });
-        });
+        await Task.Delay(1000, cancellationToken);
 
-        return Task.CompletedTask;
-    }
-
-    public Task StopAsync(CancellationToken cancellationToken)
-    {
-       
+        Console.WriteLine("Staring App ...");
+        Run();
         Console.WriteLine("Done, Closing App ...");
-        return Task.CompletedTask;
+
+        _appLifetime.StopApplication();
     }
+
 
     void Run()
     {
