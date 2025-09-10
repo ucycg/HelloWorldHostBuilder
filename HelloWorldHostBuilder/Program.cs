@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace HostBuilderPlayground;
 
@@ -14,19 +13,17 @@ public class ConsoleMessageWriter : IMessageWriter
 
     public void WriteMessage()
     {
-        Console.Error.WriteLine("Hello from DI + HostBuilder!");
+        Console.WriteLine("Hello from DI + HostBuilder!");
     }
 }
 
 public class App : IHostedService
 {
     private readonly IMessageWriter _messageWriter;
-    private readonly IHostApplicationLifetime _appLifetime;
     
-    public App(IMessageWriter messageWriter, IHostApplicationLifetime appLifetime)
+    public App(IMessageWriter messageWriter)
     {
         _messageWriter = messageWriter;
-        _appLifetime = appLifetime;
     }
 
     void Run()
@@ -36,26 +33,17 @@ public class App : IHostedService
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        // register the callback so the TCS completes when the host signals ApplicationStarted
-        _appLifetime.ApplicationStarted.Register(() =>
-        {
-            Console.Error.WriteLine("Starting App ...");
-            Run();
-            Console.Error.WriteLine("Done with App ...");
-            _appLifetime.StopApplication();
-        });
-
+        Console.WriteLine("Starting App ...");
+        Run();
         return Task.CompletedTask;
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
+        Console.WriteLine("Done with App ...");
         return Task.CompletedTask;
     }
-
 }
-
-
 
 class Program
 {
