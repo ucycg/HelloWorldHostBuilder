@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HelloWorldHostBuilder")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+87c48585af925520bf0263364dbc0823863dd35b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ed5ebf4ea7cb7064fb6fbb688dbeb2347c7166d2")]
 [assembly: System.Reflection.AssemblyProductAttribute("HelloWorldHostBuilder")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HelloWorldHostBuilder")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
